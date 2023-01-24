@@ -12,6 +12,7 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Version;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -33,7 +34,8 @@ public abstract class BaseModel {
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @EqualsAndHashCode.Include
-    @Column(name = "id", updatable = false, nullable = false)
+    @Type(type = "org.hibernate.type.PostgresUUIDType")
+    @Column(name = "id", columnDefinition = "uuid")
     private UUID id;
 
     @Version
