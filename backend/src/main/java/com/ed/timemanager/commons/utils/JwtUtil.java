@@ -29,7 +29,7 @@ public class JwtUtil {
         return Jwts.builder()
             .setIssuedAt(now)
             .setExpiration(new Date(now.getTime() + JwtUtil.TEN_DAYS))
-            .claim("id", userId)
+            .claim("id", userId.toString())
             .signWith(createPrivateKey(secretKey))
             .compact();
     }
@@ -50,7 +50,12 @@ public class JwtUtil {
 
     private PrivateKey createPrivateKey(String key) {
 
-        byte[] keyBytes = Base64.getDecoder().decode(key);
+        byte[] keyBytes = Base64.getDecoder().decode(
+            key.replace("-----BEGIN PRIVATE KEY-----", "")
+                .replace("-----END PRIVATE KEY-----", "")
+                .replaceAll("\\s", "")
+        );
+
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
 
         try {

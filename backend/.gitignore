@@ -36,3 +36,5 @@ build/
 *.properties
 *.yaml
 *.sh
+
+*secret-key*
