@@ -1,14 +1,15 @@
 package com.ed.timemanager.auth_module.services;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ed.timemanager.auth_module.components.PasswordEncoder;
 import com.ed.timemanager.auth_module.dto.AuthResponse;
 import com.ed.timemanager.auth_module.dto.LoginRequest;
 import com.ed.timemanager.auth_module.dto.RegisterRequest;
+import com.ed.timemanager.auth_module.exceptions.AuthException;
 import com.ed.timemanager.auth_module.models.User;
 import com.ed.timemanager.auth_module.repositories.UserRepository;
+import com.ed.timemanager.commons.components.JwtPrivateKey;
 import com.ed.timemanager.commons.utils.JwtUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,7 @@ public class AuthService {
 
     private final PasswordEncoder passwordEncoder;
 
-    @Value("${application.jwt-key}")
-    private String jwtKey;
+    private final JwtPrivateKey jwtKey;
 
     //endregion
     //region Public 
@@ -31,14 +31,14 @@ public class AuthService {
     public AuthResponse login(LoginRequest loginRequest) {
         
         User user = this.userRepository.findByEmail(loginRequest.getEmail())
-            .orElseThrow(() -> new IllegalStateException("Invalid email or password."));
+            .orElseThrow(() -> new AuthException("Invalid email or password."));
 
         if (!passwordEncoder.match(loginRequest.getPassword(), user.getPassword())) {
 
-            throw new IllegalStateException("Invalid email or password.");
+            throw new AuthException("Invalid email or password.");
         }
 
-        String token = JwtUtil.generateToken(user.getId(), this.jwtKey);
+        String token = JwtUtil.generateToken(user.getId(), this.jwtKey.get());
         
         return AuthResponse.builder().token(token).build();
     }
@@ -47,7 +47,7 @@ public class AuthService {
         
         if (this.userRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
 
-            throw new IllegalStateException("User already exists.");
+            throw new AuthException("User already exists.");
         }
 
         User user = User.builder()
@@ -58,7 +58,7 @@ public class AuthService {
 
         this.userRepository.save(user);
 
-        String token = JwtUtil.generateToken(user.getId(), this.jwtKey);
+        String token = JwtUtil.generateToken(user.getId(), this.jwtKey.get());
         
         return AuthResponse.builder().token(token).build();
     }
