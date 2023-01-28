@@ -2,6 +2,7 @@ package com.ed.timemanager.auth_module.controllers.auth;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -45,8 +46,10 @@ public class AuthController extends AbstractControllerBase {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> register(@RequestBody RegisterRequest registerRequest, HttpServletResponse response) {
-        
+    public ResponseEntity<Void> register(
+        @Valid @RequestBody RegisterRequest registerRequest,
+        HttpServletResponse response
+    ) {
         String token = authService.register(registerRequest);
         response.addCookie(this.createAuthCookie(token));
 

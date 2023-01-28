@@ -13,7 +13,7 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RegisterRequestPassword {
     
-    PasswordRegex validation() default PasswordRegex.LETTER_UPPER_LOWER_NUMBER_SPECIAL;
+    PasswordRegex regex() default PasswordRegex.LETTER_UPPER_LOWER_NUMBER_SPECIAL;
 
     String message() default "{constraint.register.password}";
 

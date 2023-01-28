@@ -12,7 +12,7 @@ public class RegisterRequestPasswordValidator implements ConstraintValidator<Reg
     @Override
     public void initialize(RegisterRequestPassword annotation) {
 
-        this.pattern = annotation.validation().getPattern();
+        this.pattern = annotation.regex().getPattern();
     }
 
     @Override
