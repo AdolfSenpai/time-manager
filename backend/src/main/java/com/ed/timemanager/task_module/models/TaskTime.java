@@ -1,25 +1,23 @@
 package com.ed.timemanager.task_module.models;
 
-import java.time.Instant;
-
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import com.ed.timemanager.commons.models.BaseModel;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import java.time.Instant;
+
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Entity
-@Table(name = "task_time", schema="public")
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder(toBuilder = true)
+@Entity
 public class TaskTime extends BaseModel {
     //region Fields
 

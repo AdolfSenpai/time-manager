@@ -1,24 +1,23 @@
 package com.ed.timemanager.task_module.models;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import com.ed.timemanager.auth_module.models.User;
 import com.ed.timemanager.commons.models.BaseModel;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Entity
-@Table(name = "user_task", schema = "public")
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder(toBuilder = true)
+@Entity
 public class UserTask extends BaseModel {
     //region Fields
 

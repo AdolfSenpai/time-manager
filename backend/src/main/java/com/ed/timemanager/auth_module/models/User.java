@@ -1,22 +1,21 @@
 package com.ed.timemanager.auth_module.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import com.ed.timemanager.commons.models.BaseModel;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+import javax.persistence.Entity;
+
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Entity
-@Table(name = "user", schema = "public")
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder(toBuilder = true)
+@Entity
 public class User extends BaseModel {
     
     private final String email;
