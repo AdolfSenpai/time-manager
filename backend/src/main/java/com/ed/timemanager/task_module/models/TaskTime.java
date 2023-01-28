@@ -1,6 +1,9 @@
 package com.ed.timemanager.task_module.models;
 
+import java.time.Instant;
+
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.ed.timemanager.commons.models.BaseModel;
@@ -15,20 +18,17 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Entity
-@Table(name = "task", schema = "public")
+@Table(name = "task_time", schema="public")
 @SuperBuilder(toBuilder = true)
-public class Task extends BaseModel {
+public class TaskTime extends BaseModel {
     //region Fields
 
-    private final String numberPrefix;
+    @ManyToOne
+    private final UserTask userTask;
 
-    private final String number;
-    
-    private final String name;
-    
-    private final String description;
-    
-    private final String link;
+    private final Instant startTime;
+
+    private final Instant endTime;
 
     //endregion
 }

@@ -2,7 +2,7 @@ CREATE TABLE "task"(
     "id" UUID PRIMARY KEY,
     
     "number_prefix" VARCHAR(3) NOT NULL,
-    "number" INT NOT NULL,
+    "number" VARCHAR(5) NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT,
     "link" TEXT,

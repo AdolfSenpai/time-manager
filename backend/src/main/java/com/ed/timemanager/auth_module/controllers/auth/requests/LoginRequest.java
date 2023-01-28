@@ -1,4 +1,4 @@
-package com.ed.timemanager.commons.dto;
+package com.ed.timemanager.auth_module.controllers.auth.requests;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -8,12 +8,9 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Builder
-public class PagedRequest {
-    //region Fields
+public class LoginRequest {
 
-    private final int pageNumber;
+    private final String email;
 
-    private final int pageSize;
-
-    //endregion    
+    private final String password;
 }

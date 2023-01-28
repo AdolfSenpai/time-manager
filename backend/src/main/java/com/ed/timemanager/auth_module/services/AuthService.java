@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ed.timemanager.auth_module.components.PasswordEncoder;
-import com.ed.timemanager.auth_module.dto.LoginRequest;
-import com.ed.timemanager.auth_module.dto.RegisterRequest;
+import com.ed.timemanager.auth_module.controllers.auth.requests.LoginRequest;
+import com.ed.timemanager.auth_module.controllers.auth.requests.RegisterRequest;
 import com.ed.timemanager.auth_module.exceptions.AuthException;
 import com.ed.timemanager.auth_module.models.User;
 import com.ed.timemanager.auth_module.repositories.UserRepository;

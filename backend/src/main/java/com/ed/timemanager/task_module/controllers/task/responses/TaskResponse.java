@@ -1,4 +1,4 @@
-package com.ed.timemanager.task_module.dto;
+package com.ed.timemanager.task_module.controllers.task.responses;
 
 import lombok.Builder;
 import lombok.Getter;
