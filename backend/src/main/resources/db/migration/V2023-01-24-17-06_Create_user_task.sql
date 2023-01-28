@@ -12,7 +12,7 @@ CREATE TABLE "user_task"(
 
     "created_date" TIMESTAMP NOT NULL DEFAULT NOW(),
     "modified_date" TIMESTAMP NOT NULL DEFAULT NOW(),
-    "version" BIGINT DEFAULT 1 NOT NULL,
+    "version" BIGINT DEFAULT 1 NOT NULL
 );
 
 CREATE INDEX "idx_user_task__user_id" ON "user_task"("user_id");
