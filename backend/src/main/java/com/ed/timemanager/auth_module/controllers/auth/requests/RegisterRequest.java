@@ -14,7 +14,7 @@ import lombok.Getter;
 @Builder
 public class RegisterRequest {
 
-    @Email(message = "Provide a valid email.")
+    @Email(message = "{constraint.register.email}")
     private final String email;
 
     @RegisterRequestPassword

@@ -13,7 +13,7 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RegisterRequestName {
     
-    String message() default "constraint.register.name";
+    String message() default "{constraint.register.name}";
 
     Class<?>[] groups() default {};
     

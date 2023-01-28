@@ -15,7 +15,7 @@ public @interface RegisterRequestPassword {
     
     PasswordRegex validation() default PasswordRegex.LETTER_UPPER_LOWER_NUMBER_SPECIAL;
 
-    String message() default "constraint.register.password";
+    String message() default "{constraint.register.password}";
 
     Class<?>[] groups() default {};
     
