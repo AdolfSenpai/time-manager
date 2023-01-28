@@ -1,7 +1,6 @@
 package com.ed.timemanager.auth_module.controllers.auth;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +28,7 @@ public class AuthController extends AbstractControllerBase {
 
     private final AuthService authService;
 
+    @SuppressWarnings("java:S1170")
     @Value("${application.jwt-token-lifetime}")
     private final int jwtLifetime = 0;
 
@@ -39,9 +39,8 @@ public class AuthController extends AbstractControllerBase {
     public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
         
         String token = authService.login(loginRequest);
-
-
         response.addCookie(this.createAuthCookie(token));
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -49,13 +48,13 @@ public class AuthController extends AbstractControllerBase {
     public ResponseEntity<Void> register(@RequestBody RegisterRequest registerRequest, HttpServletResponse response) {
         
         String token = authService.register(registerRequest);
-
         response.addCookie(this.createAuthCookie(token));
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @ExceptionHandler(value = { AuthException.class })
-    public String handleAuthError(HttpServletRequest request, AuthException e) {
+    @ExceptionHandler(AuthException.class)
+    public String handleAuthError(AuthException e) {
         
         return e.getLocalizedMessage();
     }

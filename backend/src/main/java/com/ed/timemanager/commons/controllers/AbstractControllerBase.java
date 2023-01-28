@@ -1,11 +1,20 @@
 package com.ed.timemanager.commons.controllers;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 
+import com.ed.timemanager.commons.dto.ValidationErrors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -21,16 +30,35 @@ public abstract class AbstractControllerBase {
     //endregion
     //region Public
 
-    @ExceptionHandler
-    public String handleError(HttpServletRequest request, Exception e) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(BindException.class)
+    public ValidationErrors handleValidationErrors(BindException e) {
 
-        logger.error(e.getLocalizedMessage(), e);
+        final Map<String, String> fieldErrors = e.getFieldErrors().stream()
+            .collect(Collectors.toMap(
+                FieldError::getField,
+                error -> Optional.ofNullable(error.getDefaultMessage()).orElse("error")
+            ));
+
+        final List<String> globalErrors = e.getGlobalErrors().stream()
+            .map(ObjectError::getDefaultMessage)
+            .collect(Collectors.toList());
+
+        return new ValidationErrors(fieldErrors, globalErrors);
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(ExpiredJwtException.class)
+    public String handleTokenExpired(ExpiredJwtException e) {
+
         return e.getLocalizedMessage();
     }
 
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler
-    public String handleTokenExpired(HttpServletRequest request, ExpiredJwtException e) {
+    public String handleError(Exception e) {
 
+        logger.error(e.getLocalizedMessage(), e);
         return e.getLocalizedMessage();
     }
 
