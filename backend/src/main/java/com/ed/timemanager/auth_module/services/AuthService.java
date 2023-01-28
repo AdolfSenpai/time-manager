@@ -1,9 +1,11 @@
 package com.ed.timemanager.auth_module.services;
 
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ed.timemanager.auth_module.components.PasswordEncoder;
-import com.ed.timemanager.auth_module.dto.AuthResponse;
 import com.ed.timemanager.auth_module.dto.LoginRequest;
 import com.ed.timemanager.auth_module.dto.RegisterRequest;
 import com.ed.timemanager.auth_module.exceptions.AuthException;
@@ -25,12 +27,15 @@ public class AuthService {
 
     private final JwtPrivateKey jwtKey;
 
+    @Value("${application.jwt-token-lifetime}")
+    private final Integer jwtLifetime = 0;
+
     //endregion
     //region Public 
 
-    public AuthResponse login(LoginRequest loginRequest) {
+    public String login(LoginRequest loginRequest) {
         
-        User user = this.userRepository.findByEmail(loginRequest.getEmail())
+        User user = Optional.ofNullable(this.userRepository.findByEmail(loginRequest.getEmail()))
             .orElseThrow(() -> new AuthException("Invalid email or password."));
 
         if (!passwordEncoder.match(loginRequest.getPassword(), user.getPassword())) {
@@ -38,14 +43,12 @@ public class AuthService {
             throw new AuthException("Invalid email or password.");
         }
 
-        String token = JwtUtil.generateToken(user.getId(), this.jwtKey.get());
-        
-        return AuthResponse.builder().token(token).build();
+        return JwtUtil.generateToken(user.getId(), this.jwtKey.get(), jwtLifetime);
     }
 
-    public AuthResponse register(RegisterRequest registerRequest) {
+    public String register(RegisterRequest registerRequest) {
         
-        if (this.userRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
+        if (this.userRepository.findByEmail(registerRequest.getEmail()) != null) {
 
             throw new AuthException("User already exists.");
         }
@@ -58,9 +61,7 @@ public class AuthService {
 
         this.userRepository.save(user);
 
-        String token = JwtUtil.generateToken(user.getId(), this.jwtKey.get());
-        
-        return AuthResponse.builder().token(token).build();
+        return JwtUtil.generateToken(user.getId(), this.jwtKey.get(), jwtLifetime);
     }
     
     //endregion

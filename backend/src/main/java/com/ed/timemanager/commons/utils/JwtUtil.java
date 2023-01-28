@@ -15,20 +15,15 @@ import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class JwtUtil {
-    //region Constants
-    
-    private final long TEN_DAYS = 864000000;
-
-    //endregion
     //region Public
 
-    public String generateToken(UUID userId, String secretKey) {
+    public String generateToken(UUID userId, String secretKey, int lifetime) {
 
         Date now = new Date();
 
         return Jwts.builder()
             .setIssuedAt(now)
-            .setExpiration(new Date(now.getTime() + JwtUtil.TEN_DAYS))
+            .setExpiration(new Date(now.getTime() + lifetime))
             .claim("id", userId.toString())
             .signWith(createPrivateKey(secretKey))
             .compact();
@@ -39,7 +34,7 @@ public class JwtUtil {
         Claims claims = Jwts.parserBuilder()
             .setSigningKey(createPrivateKey(secretKey))
             .build()
-            .parseClaimsJwt(token)
+            .parseClaimsJws(prepareToken(token))
             .getBody();
 
         return UUID.fromString(claims.get("id").toString());
@@ -47,6 +42,11 @@ public class JwtUtil {
 
     //endregion
     //region Private
+
+    private String prepareToken(String token) {
+        
+        return token.replace("Bearer ", "");
+    }
 
     private PrivateKey createPrivateKey(String key) {
 

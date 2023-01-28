@@ -1,4 +1,4 @@
-package com.ed.timemanager.auth_module.dto;
+package com.ed.timemanager.commons.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,12 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Builder
-public class AuthResponse {
-    
-    private final String token;
+public class PagedRequest {
+    //region Fields
+
+    private final int pageNumber;
+
+    private final int pageSize;
+
+    //endregion    
 }
