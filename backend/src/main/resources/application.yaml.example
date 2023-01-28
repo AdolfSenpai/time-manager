@@ -1,0 +1,39 @@
+server:
+  port: <PORT>
+
+spring:
+  profiles:
+    active: ${SPRING_PROFILE:default}
+
+  servlet:
+    multipart:
+      max-file-size: 32MB
+      max-request-size: 32MB
+
+  datasource:
+    url: <DB_URL>
+    username: <DB_USER_NAME>
+    password: <DB_USER_PASSWORD>
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQL81Dialect
+  sql:
+    init:
+      schema-locations: public
+
+flyway:
+    url: <DB_URL>
+    schema: public
+    username: <DB_USER_NAME>
+    password: <DB_USER_PASSWORD>
+
+application:
+  jwt-key-filename: <PATH_TO_RSA_SECRET_KEY>
+  jwt-token-lifetime: 864000000
