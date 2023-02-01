@@ -4,6 +4,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import com.ed.timemanager.commons.components.authorization_interceptor.RequestUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +21,7 @@ import com.ed.timemanager.auth_module.exceptions.AuthException;
 import com.ed.timemanager.auth_module.services.AuthService;
 import com.ed.timemanager.commons.controllers.AbstractControllerBase;
 
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")
 public class AuthController extends AbstractControllerBase {
@@ -32,6 +32,16 @@ public class AuthController extends AbstractControllerBase {
     @SuppressWarnings("java:S1170")
     @Value("${application.jwt-token-lifetime}")
     private final int jwtLifetime = 0;
+
+    //endregion
+    //region Ctor
+
+    @Autowired
+    public AuthController(RequestUser requestUser, AuthService authService) {
+
+        super(requestUser);
+        this.authService = authService;
+    }
 
     //endregion
     //region Public

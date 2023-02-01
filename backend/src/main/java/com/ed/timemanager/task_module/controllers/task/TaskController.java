@@ -1,9 +1,13 @@
 package com.ed.timemanager.task_module.controllers.task;
 
 import java.util.List;
-
+import com.ed.timemanager.commons.components.authorization_interceptor.RequestUser;
+import com.ed.timemanager.task_module.controllers.task.validators.get_task.task_id.GetTaskTaskId;
+import com.ed.timemanager.task_module.controllers.task.validators.get_task.user.GetTaskUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,9 +24,6 @@ import com.ed.timemanager.task_module.controllers.task.requests.CreateTaskReques
 import com.ed.timemanager.task_module.controllers.task.responses.TaskResponse;
 import com.ed.timemanager.task_module.services.TaskService;
 
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/task")
 @Validated
@@ -30,6 +31,22 @@ public class TaskController extends AbstractControllerBase {
     //region Fields
 
     private final TaskService taskService;
+
+    private final TaskControllerValidationsCache validationsCache;
+
+    //endregion
+    //region Ctor
+
+    @Autowired
+    public TaskController(
+        RequestUser requestUser,
+        TaskService taskService,
+        TaskControllerValidationsCache validationsCache
+    ) {
+        super(requestUser);
+        this.taskService = taskService;
+        this.validationsCache = validationsCache;
+    }
 
     //endregion
     //region Public
@@ -44,7 +61,9 @@ public class TaskController extends AbstractControllerBase {
         @GetTaskUser
         String taskId
     ) {
-        TaskResponse response = this.taskService.getTask(taskId);
+        TaskResponse response = this.taskService.getTask(
+            this.validationsCache.getGetTaskTaskIdValidationCache().getTaskId()
+        );
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

@@ -30,6 +30,8 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
     private final JwtPrivateKey jwtKey;
 
+    private final RequestUser requestUser;
+
     //endregion
     //region Public
 
@@ -68,8 +70,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
                     }
                     else {
 
-                        request.setAttribute("userName", user.get().getId().toString());
-                        request.setAttribute("currentUser", user.get());
+                        this.requestUser.setUser(user.get());
                     }
                 }
                 else {

@@ -16,4 +16,7 @@ public interface UserTaskRepository extends CrudRepository<UserTask, UUID> {
    
     @Query("FROM UserTask WHERE user = :user")
     List<UserTask> findByUser(@Param("user") User user);
+
+    @Query("SELECT count(u) FROM UserTask u WHERE u.user = :user AND u.task.id = :taskId")
+    int taskBelongsToUser(@Param("user") User user, @Param("taskId") UUID taskID);
 }

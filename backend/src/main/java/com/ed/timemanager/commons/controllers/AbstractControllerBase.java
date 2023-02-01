@@ -7,10 +7,13 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 
+import com.ed.timemanager.commons.components.authorization_interceptor.RequestUser;
 import com.ed.timemanager.commons.dto.ValidationErrors;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -23,8 +26,12 @@ import com.ed.timemanager.auth_module.models.User;
 
 import io.jsonwebtoken.ExpiredJwtException;
 
+@RequiredArgsConstructor
+@Component
 public abstract class AbstractControllerBase {
     //region Fields
+
+    private final RequestUser requestUser;
 
     private final Logger logger = LoggerFactory.getLogger(AbstractControllerBase.class);
 
@@ -86,11 +93,7 @@ public abstract class AbstractControllerBase {
 
     protected User getUser() {
 
-        return AbstractControllerBase.getCurrentHttpRequest()
-            .map(request -> request.getAttribute("currentUser"))
-            .filter(User.class::isInstance)
-            .map(User.class::cast)
-            .orElse(null);
+        return this.requestUser.getUser();
     }
 
     //endregion

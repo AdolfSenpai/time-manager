@@ -47,9 +47,9 @@ public class TaskService {
     //endregion
     //region Public
 
-    public TaskResponse getTask(String taskId, User user) {
+    public TaskResponse getTask(UUID taskId) {
 
-        return this.taskRepository.findById(UUID.fromString(taskId))
+        return this.taskRepository.findById(taskId)
             .map(TaskService::createTaskResponseBy)
             .orElse(null);
     }
@@ -78,6 +78,7 @@ public class TaskService {
             .build();
     }
 
+    @Transactional
     public TaskResponse createTask(CreateTaskRequest request, User user) {
         
         Task task = Task.builder()
@@ -93,19 +94,10 @@ public class TaskService {
             .user(user)
             .build();
 
-        return TaskService.createTaskResponseBy(this.saveNewTask(task, userTask));
-    }
-
-    //endregion
-    //region Private
-
-    @Transactional
-    private Task saveNewTask(Task task, UserTask userTask) {
-
         Task createdTask = this.taskRepository.save(task);
         this.userTaskRepository.save(userTask);
 
-        return createdTask;
+        return TaskService.createTaskResponseBy(createdTask);
     }
 
     //endregion
