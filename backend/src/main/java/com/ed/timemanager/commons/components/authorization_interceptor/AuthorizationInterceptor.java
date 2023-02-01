@@ -57,7 +57,7 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
                     UUID userId = JwtUtil.getUserIdFromToken(token, jwtKey.get());
                     Optional<User> user = userRepository.findById(userId);
                     
-                    if (!user.isPresent()) {
+                    if (user.isEmpty()) {
                         
                         response.sendError(
                             HttpServletResponse.SC_UNAUTHORIZED,
