@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 
 import com.ed.timemanager.commons.dto.ValidationErrors;
 import org.slf4j.Logger;
@@ -45,6 +46,13 @@ public abstract class AbstractControllerBase {
             .collect(Collectors.toList());
 
         return new ValidationErrors(fieldErrors, globalErrors);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ConstraintViolationException.class)
+    public String handleValidationErrors(ConstraintViolationException e) {
+
+        return e.getLocalizedMessage();
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
