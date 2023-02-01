@@ -25,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/task")
+@Validated
 public class TaskController extends AbstractControllerBase {
     //region Fields
 
@@ -37,9 +38,14 @@ public class TaskController extends AbstractControllerBase {
 
     @Authorized
     @GetMapping("/{id}")
-    public ResponseEntity<TaskResponse> getTask(@PathVariable("id") String taskId) {
+    public ResponseEntity<TaskResponse> getTask(
+        @PathVariable("id")
+        @GetTaskTaskId
+        @GetTaskUser
+        String taskId
+    ) {
+        TaskResponse response = this.taskService.getTask(taskId);
 
-        TaskResponse response = this.taskService.getTask(taskId, this.getUser());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
