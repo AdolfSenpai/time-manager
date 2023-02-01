@@ -14,6 +14,6 @@ import com.ed.timemanager.task_module.models.UserTask;
 @Repository
 public interface UserTaskRepository extends CrudRepository<UserTask, UUID> {
    
-    @Query("FROM #{#entityName} WHERE user = :user")
+    @Query("FROM UserTask WHERE user = :user")
     List<UserTask> findByUser(@Param("user") User user);
 }

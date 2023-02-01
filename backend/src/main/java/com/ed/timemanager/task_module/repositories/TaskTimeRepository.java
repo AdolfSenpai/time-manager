@@ -22,7 +22,11 @@ public interface TaskTimeRepository extends CrudRepository<TaskTime, UUID> {
     @Query("SELECT tt FROM TaskTime tt LEFT JOIN FETCH tt.userTask ut WHERE ut.task = :task")
     List<TaskTime> findByTask(@Param("task") Task task);
 
-    @Query("SELECT tt FROM TaskTime tt LEFT JOIN FETCH tt.userTask ut WHERE ut.user = :user AND (startTime < :endTime OR endTime > :startTime)")
+    @Query("SELECT tt " +
+        "FROM TaskTime tt " +
+        "LEFT JOIN FETCH tt.userTask ut " +
+        "WHERE ut.user = :user AND (tt.startTime < :endTime OR tt.endTime > :startTime)"
+    )
     List<TaskTime> findByUserBetweenDates(
         @Param("user") User user,
         @Param("startTime") Instant startTime,
