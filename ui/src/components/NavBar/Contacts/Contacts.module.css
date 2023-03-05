@@ -1,0 +1,9 @@
+.Contacts {
+    display: flex;
+}
+
+.ContactItem {
+    color: #77acd0;
+    text-decoration: none;
+    padding: 4px;
+}

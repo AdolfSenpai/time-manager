@@ -1,6 +1,7 @@
 import { useState } from "react";
 import React from 'react';
-import "src/styles/App.css";
+import "src/assets/styles/App.css";
+import NavBar from "src/components/NavBar/NavBar";
 import TaskList from "src/components/TaskList/TaskList";
 import { Task } from "src/models/Task";
 
@@ -19,6 +20,7 @@ function App() {
 
     return (
         <div className="App">
+            <NavBar />
             <TaskList tasks={tasks} name={"Список задач 1"}/>
         </div>
     );
