@@ -1,0 +1,63 @@
+.Task {
+    background: #bbdffa;
+    overflow: hidden;
+}
+
+.Task:first-child {
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+.Task:last-child {
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+.Task:hover {
+    transition: ease-in-out 150ms;
+    background: #e2edff;
+}
+
+.TaskTitle {
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.TaskDescription {
+    display: -webkit-box;
+    background: white;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.Task:last-child .TaskDescription {
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+.Link {
+    text-decoration: none;
+    color: #77acd0;
+    transform: translateX(40px);
+    transition: transform ease-out 200ms;
+}
+
+.Task:hover .Link {
+    transform: translateX(0);
+    transition: transform ease-out 200ms;
+}
+
+.Chevron {
+    margin-right: 8px;
+    cursor: pointer;
+    transition: ease-in 0.1s;
+}
+
+.ChevronUnfolded {
+    transform: rotate(90deg);
+    transition: ease-in 0.1s;
+}

@@ -1,0 +1,25 @@
+.enter {
+    padding: 0 8px;
+    max-height: 0;
+}
+
+.enterActive {
+    padding: 4px 8px;
+    max-height: 160px;
+    transition: 200ms;
+}
+
+.enterDone {
+    padding: 4px 8px;
+}
+
+.exit {
+    padding: 4px 8px;
+    max-height: 160px;
+}
+
+.exitActive {
+    padding: 0 8px;
+    max-height: 0;
+    transition: 200ms;
+}
