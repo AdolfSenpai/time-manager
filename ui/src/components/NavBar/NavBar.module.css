@@ -8,3 +8,8 @@
     background-color: white;
     box-shadow: 0 0 8px -4px gray;
 }
+
+.UserAndContacts {
+    display: flex;
+    flex-direction: column;
+}
