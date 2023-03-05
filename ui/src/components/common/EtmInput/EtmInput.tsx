@@ -7,6 +7,7 @@ export default function EtmInput(props: InputHTMLAttributes<HTMLInputElement>) {
     return(
         <div className={styles.EtmInput}>
             <input {...props}/>
+            <div className={styles.BorderBottom}/>
         </div>
     );
 }

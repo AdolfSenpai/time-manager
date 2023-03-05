@@ -6,10 +6,20 @@
     padding: 4px 16px;
     margin: 4px 0;
     background-color: transparent;
-    border-radius: 3px;
-    border-bottom: 1px solid $accent;
+
+    input {
+        width: 100%;
+    }
 }
 
-.EtmInput:has(input:focus) {
-    border-bottom: 2px solid $accent;
+.BorderBottom {
+    width: 100%;
+    border-bottom: 1px solid $primary;
+    border-radius: 3px;
+    transition: all 100ms ease-in-out;
+}
+
+.EtmInput:has(input:focus) .BorderBottom {
+    transform: scaleY(2.5) scaleX(1.02) translateY(1px);
+    border-bottom-color: $accent;
 }
