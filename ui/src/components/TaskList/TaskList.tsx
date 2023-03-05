@@ -2,7 +2,7 @@ import { useState } from "react";
 import React from "react";
 import TaskRow from "src/components/TaskList/TaskRow/TaskRow";
 import { Task } from "src/models/Task";
-import classes from "src/components/TaskList/TaskList.module.css";
+import classes from "src/components/TaskList/TaskList.module.scss";
 
 function TaskList({ name, tasks }: { name: string, tasks: Task[] }) {
 

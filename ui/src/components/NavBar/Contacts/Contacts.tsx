@@ -2,7 +2,7 @@ import { faG } from "@fortawesome/free-solid-svg-icons";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import styles from "src/components/NavBar/Contacts/Contacts.module.css";
+import styles from "src/components/NavBar/Contacts/Contacts.module.scss";
 
 export default function Contacts() {
 

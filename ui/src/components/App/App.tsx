@@ -1,7 +1,7 @@
 import { useState } from "react";
 import React from 'react';
-import "src/assets/styles/main.css";
-import styles from "src/components/App/App.module.css";
+import "src/assets/styles/main.scss";
+import styles from "src/components/App/App.module.scss";
 import getTasksData from "src/assets/tasks.data";
 import AuthForm from "src/components/AuthForm/AuthForm";
 import NavBar from "src/components/NavBar/NavBar";

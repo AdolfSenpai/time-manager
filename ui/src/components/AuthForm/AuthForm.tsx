@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CSSTransition } from "react-transition-group";
-import styles from "src/components/AuthForm/AuthForm.module.css";
+import styles from "src/components/AuthForm/AuthForm.module.scss";
 import React from "react";
 import EtmInput from "src/components/common/EtmInput/EtmInput";
 

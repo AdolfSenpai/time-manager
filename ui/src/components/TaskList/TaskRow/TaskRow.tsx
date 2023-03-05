@@ -1,6 +1,6 @@
 import React from "react";
 import TaskDescription from "src/components/TaskList/TaskRow/TaskDescription/TaskDescription";
-import styles from "src/components/TaskList/TaskRow/TaskRow.module.css";
+import styles from "src/components/TaskList/TaskRow/TaskRow.module.scss";
 import TaskTitle from "src/components/TaskList/TaskRow/TaskTitle/TaskTitle";
 import { Task } from "src/models/Task";
 

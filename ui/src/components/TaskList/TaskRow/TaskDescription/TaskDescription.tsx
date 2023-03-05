@@ -1,7 +1,7 @@
 import React from "react";
 import { CSSTransition } from "react-transition-group";
-import descriptionTransitions from "src/components/TaskList/TaskRow/TaskDescription/DescriptionTransitions.module.css";
-import styles from "src/components/TaskList/TaskRow/TaskRow.module.css";
+import descriptionTransitions from "src/components/TaskList/TaskRow/TaskDescription/DescriptionTransitions.module.scss";
+import styles from "src/components/TaskList/TaskRow/TaskRow.module.scss";
 
 export default function TaskDescription(props: {
     text: string | undefined,
