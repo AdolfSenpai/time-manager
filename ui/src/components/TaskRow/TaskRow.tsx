@@ -4,9 +4,9 @@ import TaskTitle from "src/components/TaskRow/TaskTitle/TaskTitle";
 import { Task } from "src/models/Task";
 
 export default function TaskRow(props: {
-        task: Task,
-        folded: boolean,
-        toggleFolding: (taskId: string) => void,
+    task: Task,
+    folded: boolean,
+    toggleFolding: (taskId: string) => void,
 }) {
 
     return (
