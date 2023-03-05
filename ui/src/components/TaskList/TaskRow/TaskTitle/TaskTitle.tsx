@@ -2,6 +2,7 @@ import { faLink } from "@fortawesome/free-solid-svg-icons";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MouseEventHandler } from "react";
+import React from "react";
 import styles from "src/components/TaskList/TaskRow/TaskRow.module.css";
 import { Task } from "src/models/Task";
 

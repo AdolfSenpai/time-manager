@@ -1,5 +1,6 @@
+import React from "react";
 import ClockImage from "src/assets/images/icon48.png";
-import styles from "src/components/NavBar/TitleCard/TitleCard.module.css"
+import styles from "src/components/NavBar/TitleCard/TitleCard.module.css";
 
 export default function TitleCard() {
 
