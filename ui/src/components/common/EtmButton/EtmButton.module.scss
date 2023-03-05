@@ -4,12 +4,28 @@
 
 .EtmButton {
   padding: 4px 16px;
-  background-color: $primary-light;
-  border: $border-default;
+  border: none;
   border-radius: 5px;
-  @include raisable;
+  @include raisable(5px);
 
-  &:hover {
-    background-color: $primary;
+  &.Primary {
+    background-color: $primary-light;
+
+    &:hover {
+      background-color: $primary;
+    }
+  }
+
+  &.Blank {
+    background-color: white;
+  }
+
+  &.Warn {
+    color: $primary-light;
+    background-color: $warn-light;
+
+    &:hover {
+      background-color: $warn;
+    }
   }
 }

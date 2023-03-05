@@ -22,7 +22,7 @@ export default function AuthForm() {
                 <CSSTransition in={!isRegistration} timeout={300} unmountOnExit>
                     <EtmButton>Sign In</EtmButton>
                 </CSSTransition>
-                <EtmButton>Sign Up</EtmButton>
+                <EtmButton color="blank">Sign Up</EtmButton>
             </div>
         </form>
     );
