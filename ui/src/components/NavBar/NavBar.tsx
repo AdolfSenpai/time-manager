@@ -9,8 +9,10 @@ export default function NavBar(props: {user: User | null}) {
 
     return (
         <nav className={styles.NavBar}>
-            <TitleCard />
-            <div>
+            <div className={styles.NavBarItem}>
+                <TitleCard />
+            </div>
+            <div className={styles.NavBarItem}>
                 TODO: CURRENT TASK, CREATE LIST, STATISTICS
             </div>
             <div className={styles.UserAndContacts}>

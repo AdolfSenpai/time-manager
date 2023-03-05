@@ -1,4 +1,5 @@
 @import "src/styles/variables/colors";
+@import "src/styles/mixins";
 
 .Contacts {
     display: flex;
@@ -8,4 +9,5 @@
     color: $accent;
     text-decoration: none;
     padding: 4px;
+    @include raisable();
 }

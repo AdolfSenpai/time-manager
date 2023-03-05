@@ -3,13 +3,18 @@
     width: 100vw;
     height: 80px;
     align-items: center;
-    justify-content: space-between;
     padding: 8px;
     background-color: white;
     box-shadow: 0 0 8px -4px gray;
 }
 
+.NavBarItem {
+    flex: 1;
+}
+
 .UserAndContacts {
     display: flex;
+    flex: 1;
+    align-items: flex-end;
     flex-direction: column;
 }
