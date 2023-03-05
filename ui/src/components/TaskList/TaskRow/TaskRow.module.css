@@ -52,6 +52,7 @@
 }
 
 .Chevron {
+    color: #77acd0;
     margin-right: 8px;
     cursor: pointer;
     transition: ease-in 0.1s;
