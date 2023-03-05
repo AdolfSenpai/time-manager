@@ -4,13 +4,13 @@
 }
 
 .Task:first-child {
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
 }
 
 .Task:last-child {
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
 
 .Task:hover {
@@ -35,8 +35,8 @@
 }
 
 .Task:last-child .TaskDescription {
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
 }
 
 .Link {
