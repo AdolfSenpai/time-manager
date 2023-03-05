@@ -1,6 +1,6 @@
-import TaskDescription from "src/components/TaskRow/TaskDescription/TaskDescription";
-import styles from "src/components/TaskRow/TaskRow.module.css";
-import TaskTitle from "src/components/TaskRow/TaskTitle/TaskTitle";
+import TaskDescription from "src/components/TaskList/TaskRow/TaskDescription/TaskDescription";
+import styles from "src/components/TaskList/TaskRow/TaskRow.module.css";
+import TaskTitle from "src/components/TaskList/TaskRow/TaskTitle/TaskTitle";
 import { Task } from "src/models/Task";
 
 export default function TaskRow(props: {

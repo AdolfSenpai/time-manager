@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from "react";
-import TaskRow from "src/components/TaskRow/TaskRow";
+import TaskRow from "src/components/TaskList/TaskRow/TaskRow";
 import { Task } from "src/models/Task";
 import classes from "src/components/TaskList/TaskList.module.css"
 
