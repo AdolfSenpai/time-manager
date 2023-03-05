@@ -1,7 +1,25 @@
-.AuthForm {
+@import "src/styles/variables/global";
 
+.AuthForm {
+  position: relative;
+  display: flex;
+  width: 400px;
+  padding: 16px;
+  align-items: center;
+  flex-direction: column;
+  border: $border-accent;
+  border-radius: $border-radius-default;
+  background-color: white;
+  overflow: hidden;
 }
 
 .Buttons {
+  display: flex;
+  width: 300px;
+  margin-top: 16px;
+  justify-content: center;
+}
 
+button + button {
+  margin-left: 32px;
 }

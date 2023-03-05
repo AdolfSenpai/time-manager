@@ -1,5 +1,7 @@
+@import "src/styles/variables/colors";
+
 .Task {
-    background: #bbdffa;
+    background-color: $primary;
     overflow: hidden;
 }
 
@@ -15,7 +17,7 @@
 
 .Task:hover {
     transition: ease-in-out 150ms;
-    background: #e2edff;
+    background: $primary-light;
 }
 
 .TaskTitle {
@@ -41,7 +43,7 @@
 
 .Link {
     text-decoration: none;
-    color: #77acd0;
+    color: $accent;
     transform: translateX(40px);
     transition: transform ease-out 200ms;
 }
@@ -52,7 +54,7 @@
 }
 
 .Chevron {
-    color: #77acd0;
+    color: $accent;
     margin-right: 8px;
     cursor: pointer;
     transition: ease-in 0.1s;

@@ -1,3 +1,6 @@
+@import "src/styles/variables/colors";
+@import "src/styles/variables/global";
+
 .TaskList {
     display: flex;
     width: 400px;
@@ -12,6 +15,6 @@
 }
 
 .ListOutline {
-    border: #77acd0 dashed 3px;
-    border-radius: 16px;
+    border: $border-accent;
+    border-radius: $border-radius-default;
 }

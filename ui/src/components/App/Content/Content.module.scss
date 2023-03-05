@@ -1,0 +1,12 @@
+.Content {
+  display: flex;
+  padding: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.TaskGroups {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}

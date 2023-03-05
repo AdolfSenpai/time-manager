@@ -1,9 +1,11 @@
+@import "src/styles/variables/colors";
+
 .Contacts {
     display: flex;
 }
 
 .ContactItem {
-    color: #77acd0;
+    color: $accent;
     text-decoration: none;
     padding: 4px;
 }
