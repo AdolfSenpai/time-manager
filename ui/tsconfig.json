@@ -21,7 +21,11 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "strictNullChecks": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/@fortawesome",
+    ]
   },
   "include": [
     "src",
