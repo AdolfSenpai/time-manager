@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +15,7 @@ import com.ed.timemanager.task_module.models.Task;
 import com.ed.timemanager.task_module.models.TaskTime;
 
 @Repository
-public interface TaskTimeRepository extends CrudRepository<TaskTime, UUID> {
+public interface TaskTimeRepository extends PagingAndSortingRepository<TaskTime, UUID> {
     
     @Query("SELECT tt FROM TaskTime tt LEFT JOIN FETCH tt.userTask ut WHERE ut.user = :user")
     List<TaskTime> findByUser(@Param("user") User user);

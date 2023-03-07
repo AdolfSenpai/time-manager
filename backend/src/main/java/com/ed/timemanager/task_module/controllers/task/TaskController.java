@@ -2,6 +2,7 @@ package com.ed.timemanager.task_module.controllers.task;
 
 import java.util.List;
 import com.ed.timemanager.commons.components.authorization_interceptor.RequestUser;
+import com.ed.timemanager.task_module.controllers.task.requests.FindTaskRequest;
 import com.ed.timemanager.task_module.controllers.task.validators.get_task.task_id.GetTaskTaskId;
 import com.ed.timemanager.task_module.controllers.task.validators.get_task.user.GetTaskUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +63,7 @@ public class TaskController extends AbstractControllerBase {
         String taskId
     ) {
         TaskResponse response = this.taskService.getTask(
-            this.validationsCache.getGetTaskTaskIdValidationCache().getTaskId()
+            this.validationsCache.getTaskId().getValue()
         );
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -79,10 +80,11 @@ public class TaskController extends AbstractControllerBase {
     @Authorized
     @GetMapping
     public ResponseEntity<PagedResponse<TaskResponse>> getTaskBatch(
-        @RequestParam(value = "page", required = true) int page,
-        @RequestParam(value = "pageSize", required = true) int pageSize
+        @RequestParam(value = "page") int page,
+        @RequestParam(value = "pageSize") int pageSize
     ) {    
         PagedResponse<TaskResponse> response = this.taskService.getTaskPage(page, pageSize, getUser());
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -92,22 +94,9 @@ public class TaskController extends AbstractControllerBase {
     @Authorized
     @PostMapping("/find")
     public ResponseEntity<TaskResponse> findTask(
-        @RequestParam(value = "page", required = true) int page,
-        @RequestParam(value = "pageSize", required = true) int pageSize,
-        @RequestParam(value = "number", required = false) String taskNumber,
-        @RequestParam(value = "startDate", required = false) String startDate,
-        @RequestParam(value = "endDate", required = false) String endDate
-    ) {
-
-        return null;
-    }
-
-    @Authorized
-    @PostMapping("/find/all")
-    public ResponseEntity<TaskResponse> findTask(
-        @RequestParam(value = "number", required = false) String taskNumber,
-        @RequestParam(value = "startDate", required = false) String startDate,
-        @RequestParam(value = "endDate", required = false) String endDate
+        @RequestParam(value = "page") int page,
+        @RequestParam(value = "pageSize") int pageSize,
+        @RequestBody FindTaskRequest request
     ) {
 
         return null;
@@ -121,6 +110,7 @@ public class TaskController extends AbstractControllerBase {
     public ResponseEntity<TaskResponse> createTask(@RequestBody CreateTaskRequest request) {
 
         TaskResponse response = this.taskService.createTask(request, this.getUser());
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

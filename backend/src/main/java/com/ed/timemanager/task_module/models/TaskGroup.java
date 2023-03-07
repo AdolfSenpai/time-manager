@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -17,21 +18,13 @@ import javax.persistence.ManyToOne;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder(toBuilder = true)
 @Entity
-public class Task extends BaseModel {
+public class TaskGroup extends BaseModel {
     //region Fields
 
-    private final String numberPrefix;
-
-    private final String number;
-    
     private final String name;
-    
-    private final String description;
-    
-    private final String link;
 
-    @ManyToOne
-    private final TaskGroup group;
+    @OneToMany
+    private final List<Task> taskList;
 
     //endregion
 }

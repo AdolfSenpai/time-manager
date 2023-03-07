@@ -37,7 +37,8 @@ public class TaskService {
         
         return TaskResponse.builder()
             .id(task.getId().toString())
-            .number(task.getNumberPrefix() + task.getNumber())
+            .numberPrefix(task.getNumberPrefix())
+            .number(task.getNumber())
             .link(task.getLink())
             .name(task.getName())
             .description(task.getDescription())
@@ -64,7 +65,7 @@ public class TaskService {
 
     public PagedResponse<TaskResponse> getTaskPage(int pageNumber, int pageSize, User user) {
 
-        Page<Task> page = this.taskRepository.findAll(PageRequest.of(pageNumber, pageSize));
+        Page<UserTask> page = this.userTaskRepository.findByUser(user, PageRequest.of(pageNumber, pageSize));
         
         return PagedResponse.<TaskResponse>builder()
             .pageNumber(pageNumber)
@@ -72,6 +73,7 @@ public class TaskService {
             .pageCount(page.getTotalPages())
             .responseList(
                 page.getContent().stream()
+                    .map(UserTask::getTask)
                     .map(TaskService::createTaskResponseBy)
                     .collect(Collectors.toList())
             )

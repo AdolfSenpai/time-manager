@@ -19,16 +19,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class AuthService {
+    //region Constants
+
+    @Value("${application.jwt-token-lifetime}")
+    private static final Integer JWT_LIFETIME = 0;
+
+    //endregion
     //region Fields
 
     private final UserRepository userRepository;
 
-    private final PasswordEncoder passwordEncoder;
-
     private final JwtPrivateKey jwtKey;
-
-    @Value("${application.jwt-token-lifetime}")
-    private final Integer jwtLifetime = 0;
 
     //endregion
     //region Public 
@@ -38,12 +39,12 @@ public class AuthService {
         User user = Optional.ofNullable(this.userRepository.findByEmail(loginRequest.getEmail()))
             .orElseThrow(() -> new AuthException("Invalid email or password."));
 
-        if (!passwordEncoder.match(loginRequest.getPassword(), user.getPassword())) {
+        if (!PasswordEncoder.match(loginRequest.getPassword(), user.getPassword())) {
 
             throw new AuthException("Invalid email or password.");
         }
 
-        return JwtUtil.generateToken(user.getId(), this.jwtKey.get(), jwtLifetime);
+        return JwtUtil.generateToken(user.getId(), this.jwtKey.get(), JWT_LIFETIME);
     }
 
     public String register(RegisterRequest registerRequest) {
@@ -56,12 +57,12 @@ public class AuthService {
         User user = User.builder()
             .email(registerRequest.getEmail())
             .name(registerRequest.getName())
-            .password(passwordEncoder.encode(registerRequest.getPassword()))
+            .password(PasswordEncoder.encode(registerRequest.getPassword()))
             .build();
 
         this.userRepository.save(user);
 
-        return JwtUtil.generateToken(user.getId(), this.jwtKey.get(), jwtLifetime);
+        return JwtUtil.generateToken(user.getId(), this.jwtKey.get(), JWT_LIFETIME);
     }
     
     //endregion

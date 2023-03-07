@@ -11,7 +11,7 @@ import java.util.UUID;
 @Component
 public class GetTaskTaskIdValidator implements ConstraintValidator<GetTaskTaskId, String> {
 
-    private final GetTaskTaskIdValidationCache cache;
+    private final ValidationCache<UUID> cache;
 
     @SuppressWarnings("unused")
     @Override
@@ -19,7 +19,7 @@ public class GetTaskTaskIdValidator implements ConstraintValidator<GetTaskTaskId
 
         try {
 
-            this.cache.setTaskId(UUID.fromString(value));
+            this.cache.setValue(UUID.fromString(value));
         }
         catch (IllegalArgumentException e) {
 

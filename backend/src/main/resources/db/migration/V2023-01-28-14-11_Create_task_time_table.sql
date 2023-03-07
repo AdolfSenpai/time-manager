@@ -10,7 +10,7 @@ CREATE TABLE "task_time"(
 
     "created_date" TIMESTAMP NOT NULL DEFAULT NOW(),
     "modified_date" TIMESTAMP NOT NULL DEFAULT NOW(),
-    "version" BIGINT DEFAULT 1 NOT NULL,
+    "version" BIGINT DEFAULT 1 NOT NULL
 );
 
 CREATE INDEX "idx_task_time__user_task_id" ON "task_time"("user_task_id");
