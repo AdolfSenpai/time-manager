@@ -34,7 +34,7 @@ public class AuthService {
     //endregion
     //region Public 
 
-    public String login(LoginRequest loginRequest) {
+    public User login(LoginRequest loginRequest) {
         
         User user = Optional.ofNullable(this.userRepository.findByEmail(loginRequest.getEmail()))
             .orElseThrow(() -> new AuthException("Invalid email or password."));
@@ -44,10 +44,12 @@ public class AuthService {
             throw new AuthException("Invalid email or password.");
         }
 
-        return JwtUtil.generateToken(user.getId(), this.jwtKey.get(), JWT_LIFETIME);
+        return user.toBuilder()
+            .token(JwtUtil.generateToken(user.getId(), this.jwtKey.get(), JWT_LIFETIME))
+            .build();
     }
 
-    public String register(RegisterRequest registerRequest) {
+    public User register(RegisterRequest registerRequest) {
         
         if (this.userRepository.findByEmail(registerRequest.getEmail()) != null) {
 
@@ -62,7 +64,9 @@ public class AuthService {
 
         this.userRepository.save(user);
 
-        return JwtUtil.generateToken(user.getId(), this.jwtKey.get(), JWT_LIFETIME);
+        return user.toBuilder()
+            .token(JwtUtil.generateToken(user.getId(), this.jwtKey.get(), JWT_LIFETIME))
+            .build();
     }
     
     //endregion

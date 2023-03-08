@@ -4,6 +4,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import com.ed.timemanager.auth_module.models.User;
 import com.ed.timemanager.commons.components.authorization_interceptor.RequestUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,29 +48,29 @@ public class AuthController extends AbstractControllerBase {
     //region Public
 
     @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
-        
-        String token = authService.login(loginRequest);
-        response.addCookie(this.createAuthCookie(token));
+    public ResponseEntity<User> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        User user = authService.login(loginRequest);
+        response.addCookie(this.createAuthCookie(user.getToken()));
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> register(
+    public ResponseEntity<User> register(
         @Valid @RequestBody RegisterRequest registerRequest,
         HttpServletResponse response
     ) {
-        String token = authService.register(registerRequest);
-        response.addCookie(this.createAuthCookie(token));
+        User user = authService.register(registerRequest);
+        response.addCookie(this.createAuthCookie(user.getToken()));
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @ExceptionHandler(AuthException.class)
-    public String handleAuthError(AuthException e) {
-        
-        return e.getLocalizedMessage();
+    public ResponseEntity<String> handleAuthError(AuthException e) {
+
+        return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
     }
 
     //endregion

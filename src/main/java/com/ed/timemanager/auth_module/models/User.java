@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -23,4 +24,7 @@ public class User extends BaseModel {
     private final String name;
 
     private final String password;
+
+    @Transient
+    private final String token;
 }
