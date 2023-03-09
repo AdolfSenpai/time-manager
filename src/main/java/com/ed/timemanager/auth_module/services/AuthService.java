@@ -1,20 +1,21 @@
 package com.ed.timemanager.auth_module.services;
 
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import com.ed.timemanager.auth_module.components.PasswordEncoder;
 import com.ed.timemanager.auth_module.controllers.auth.requests.LoginRequest;
 import com.ed.timemanager.auth_module.controllers.auth.requests.RegisterRequest;
+import com.ed.timemanager.auth_module.controllers.auth.responses.AuthResponse;
 import com.ed.timemanager.auth_module.exceptions.AuthException;
 import com.ed.timemanager.auth_module.models.User;
 import com.ed.timemanager.auth_module.repositories.UserRepository;
 import com.ed.timemanager.commons.components.JwtPrivateKey;
 import com.ed.timemanager.commons.utils.JwtUtil;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -22,7 +23,7 @@ public class AuthService {
     //region Constants
 
     @Value("${application.jwt-token-lifetime}")
-    private static final Integer JWT_LIFETIME = 0;
+    private static final Integer JWT_LIFETIME = 60*60*24*30;
 
     //endregion
     //region Fields
@@ -34,7 +35,7 @@ public class AuthService {
     //endregion
     //region Public 
 
-    public User login(LoginRequest loginRequest) {
+    public AuthResponse login(LoginRequest loginRequest, HttpServletResponse response) {
         
         User user = Optional.ofNullable(this.userRepository.findByEmail(loginRequest.getEmail()))
             .orElseThrow(() -> new AuthException("Invalid email or password."));
@@ -44,12 +45,17 @@ public class AuthService {
             throw new AuthException("Invalid email or password.");
         }
 
-        return user.toBuilder()
-            .token(JwtUtil.generateToken(user.getId(), this.jwtKey.get(), JWT_LIFETIME))
+        String token = JwtUtil.generateToken(user.getId(), this.jwtKey.get(), JWT_LIFETIME);
+        response.addCookie(this.createAuthCookie(token));
+
+        return AuthResponse.builder()
+            .id(user.getId().toString())
+            .email(user.getEmail())
+            .name(user.getName())
             .build();
     }
 
-    public User register(RegisterRequest registerRequest) {
+    public AuthResponse register(RegisterRequest registerRequest, HttpServletResponse response) {
         
         if (this.userRepository.findByEmail(registerRequest.getEmail()) != null) {
 
@@ -64,10 +70,31 @@ public class AuthService {
 
         this.userRepository.save(user);
 
-        return user.toBuilder()
-            .token(JwtUtil.generateToken(user.getId(), this.jwtKey.get(), JWT_LIFETIME))
+        String token = JwtUtil.generateToken(user.getId(), this.jwtKey.get(), JWT_LIFETIME);
+        response.addCookie(this.createAuthCookie(token));
+
+        return AuthResponse.builder()
+            .id(user.getId().toString())
+            .email(user.getEmail())
+            .name(user.getName())
             .build();
     }
     
+    //endregion
+    //region Private
+
+    private Cookie createAuthCookie(String token) {
+
+        Cookie cookie = new Cookie("Authorization", token);
+
+        cookie.setHttpOnly(false);
+        cookie.setSecure(true);
+        cookie.setDomain("local.edtmmngr.com");
+        cookie.setMaxAge(AuthService.JWT_LIFETIME);
+        cookie.setPath("/api");
+
+        return cookie;
+    }
+
     //endregion
 }
