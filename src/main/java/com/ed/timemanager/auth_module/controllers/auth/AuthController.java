@@ -5,12 +5,14 @@ import com.ed.timemanager.auth_module.controllers.auth.requests.RegisterRequest;
 import com.ed.timemanager.auth_module.controllers.auth.responses.AuthResponse;
 import com.ed.timemanager.auth_module.exceptions.AuthException;
 import com.ed.timemanager.auth_module.services.AuthService;
+import com.ed.timemanager.commons.components.authorization_interceptor.Authorized;
 import com.ed.timemanager.commons.components.authorization_interceptor.RequestUser;
 import com.ed.timemanager.commons.controllers.AbstractControllerBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,6 +58,13 @@ public class AuthController extends AbstractControllerBase {
         AuthResponse user = authService.register(registerRequest, response);
 
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @Authorized
+    @GetMapping("/currentUser")
+    public ResponseEntity<AuthResponse> currentUser() {
+
+        return new ResponseEntity<>(AuthResponse.fromUser(this.getUser()), HttpStatus.OK);
     }
 
     @ExceptionHandler(AuthException.class)

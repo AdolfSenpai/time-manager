@@ -87,8 +87,8 @@ public class AuthService {
 
         Cookie cookie = new Cookie("Authorization", token);
 
-        cookie.setHttpOnly(false);
-        cookie.setSecure(true);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false);
         cookie.setDomain("local.edtmmngr.com");
         cookie.setMaxAge(AuthService.JWT_LIFETIME);
         cookie.setPath("/api");
